@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const modeHide = document.getElementById('modeHide');
   const modePlaceholder = document.getElementById('modePlaceholder');
-  const presetButtons = document.querySelectorAll('.preset-pill');
+  const presetButtons = document.querySelectorAll('.preset');
   const refreshBtn = document.getElementById('refreshBtn');
 
   // Stats elements
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     no_videos: {
       filterVideos: true,
       filterImages: false,
-      filterGifs: true,
+      filterGifs: false,
       filterCards: false,
     },
   };
@@ -93,8 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
     presetButtons.forEach((btn) => {
       if (btn.dataset.preset === presetName) {
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
       } else {
         btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
       }
     });
   }
@@ -104,11 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isEnabled) {
       mainContent.classList.remove('disabled-mode');
       statusDot.classList.remove('inactive');
-      statusText.textContent = 'Filters active';
+      statusText.textContent = 'Filtering is on';
     } else {
       mainContent.classList.add('disabled-mode');
       statusDot.classList.add('inactive');
-      statusText.textContent = 'CuratX paused';
+      statusText.textContent = 'Filtering is paused';
     }
   }
 
