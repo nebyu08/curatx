@@ -31,8 +31,11 @@
   // Set of post cell elements currently blocked
   const blockedElements = new WeakSet();
 
+  // Storage helper
+  const storage = chrome.storage.sync || chrome.storage.local;
+
   // Load saved settings
-  chrome.storage.sync.get(DEFAULT_SETTINGS, (stored) => {
+  storage.get(DEFAULT_SETTINGS, (stored) => {
     if (stored) {
       settings = { ...DEFAULT_SETTINGS, ...stored };
     }
@@ -41,7 +44,7 @@
 
   // Listen for real-time updates from popup or other contexts
   chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName === 'sync') {
+    if (areaName === 'sync' || areaName === 'local') {
       for (const [key, change] of Object.entries(changes)) {
         settings[key] = change.newValue;
       }
@@ -196,7 +199,7 @@
     const btn = document.createElement('button');
     btn.className = 'curatx-reveal-btn';
     btn.type = 'button';
-    btn.textContent = 'Show';
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg> Show`;
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       e.preventDefault();

@@ -3,162 +3,267 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CuratX Controls</title>
+  <title>CuratX</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
+  <div class="app-card">
     <!-- Header -->
-    <header class="header">
-      <div class="brand">
-        <div class="logo-icon">
-          <img src="../icons/icon32.png" alt="CuratX Logo" width="24" height="24">
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="brand-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
         </div>
-        <div class="brand-text">
-          <h1>CuratX</h1>
-          <span class="tagline">X Feed Tuner</span>
+        <div class="brand-details">
+          <div class="title-row">
+            <span class="app-name">CuratX</span>
+            <span class="version-tag">cozy feed</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot" id="statusDot"></span>
+            <span class="status-text" id="statusText">Filters active</span>
+          </div>
         </div>
       </div>
-      <label class="master-toggle" title="Enable / Disable CuratX">
-        <input type="checkbox" id="masterSwitch">
-        <span class="slider round"></span>
+
+      <!-- Master Switch -->
+      <label class="cozy-switch master-switch" title="Master Toggle">
+        <input type="checkbox" id="masterSwitch" checked>
+        <span class="switch-track">
+          <span class="switch-thumb"></span>
+        </span>
       </label>
     </header>
 
-    <!-- Presets -->
-    <section class="section">
-      <div class="section-title">Quick Presets</div>
-      <div class="preset-group" id="presetGroup">
-        <button type="button" class="preset-btn" data-preset="text_only" title="Hide all videos, images, gifs & cards">
-          <span class="preset-icon">📄</span>
-          <span class="preset-label">Text Only</span>
-        </button>
-        <button type="button" class="preset-btn" data-preset="text_and_images" title="Allow text & photos, block videos & gifs">
-          <span class="preset-icon">🖼️</span>
-          <span class="preset-label">Text + Img</span>
-        </button>
-        <button type="button" class="preset-btn" data-preset="no_videos" title="Block videos and gifs">
-          <span class="preset-icon">🚫</span>
-          <span class="preset-label">No Videos</span>
-        </button>
-        <button type="button" class="preset-btn active" data-preset="custom" title="Custom configuration">
-          <span class="preset-icon">⚙️</span>
-          <span class="preset-label">Custom</span>
-        </button>
-      </div>
-    </section>
+    <main class="app-content" id="mainContent">
+      <!-- Quick Moods / Presets -->
+      <section class="panel-section">
+        <div class="section-label">Feed Mood</div>
+        <div class="preset-pill-grid" id="presetGroup">
+          <button type="button" class="preset-pill" data-preset="text_only" title="Pure text reading experience">
+            <svg class="pill-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+              <path d="M6 6h10"></path>
+              <path d="M6 10h10"></path>
+            </svg>
+            <span>Text Only</span>
+          </button>
 
-    <!-- Filters Section -->
-    <section class="section" id="filtersSection">
-      <div class="section-title">Filter Out Media</div>
+          <button type="button" class="preset-pill" data-preset="text_and_images" title="Keep photos, silence videos and GIFs">
+            <svg class="pill-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <circle cx="9" cy="9" r="2"></circle>
+              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+            </svg>
+            <span>Text + Img</span>
+          </button>
 
-      <div class="filter-item">
-        <div class="filter-info">
-          <span class="filter-icon">🎥</span>
-          <div class="filter-texts">
-            <span class="filter-name">Videos</span>
-            <span class="filter-desc">Native clips & video posts</span>
+          <button type="button" class="preset-pill" data-preset="no_videos" title="Hide video autoplay & GIFs">
+            <svg class="pill-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path>
+              <rect x="2" y="6" width="14" height="12" rx="2"></rect>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            </svg>
+            <span>No Videos</span>
+          </button>
+
+          <button type="button" class="preset-pill active" data-preset="custom" title="Custom per-media preferences">
+            <svg class="pill-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="20" y1="21" y2="21"></line>
+              <line x1="4" x2="20" y1="3" y2="3"></line>
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <circle cx="9" cy="12" r="3"></circle>
+              <circle cx="16" cy="3" r="3"></circle>
+              <circle cx="7" cy="21" r="3"></circle>
+            </svg>
+            <span>Custom</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Media Filter Controls -->
+      <section class="panel-section">
+        <div class="section-label">Media Filters</div>
+        <div class="filter-stack">
+          <!-- Videos -->
+          <div class="filter-row">
+            <div class="filter-leading">
+              <div class="icon-wrap icon-amber">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                </svg>
+              </div>
+              <div class="filter-meta">
+                <span class="filter-title">Videos</span>
+                <span class="filter-subtitle">Native clips & broadcasts</span>
+              </div>
+            </div>
+            <label class="cozy-switch">
+              <input type="checkbox" id="filterVideos">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- GIFs -->
+          <div class="filter-row">
+            <div class="filter-leading">
+              <div class="icon-wrap icon-rose">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 12V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"></path>
+                  <path d="m9 10 3-3 3 3"></path>
+                  <path d="m9 14 3 3 3-3"></path>
+                </svg>
+              </div>
+              <div class="filter-meta">
+                <span class="filter-title">Animated GIFs</span>
+                <span class="filter-subtitle">Looping reaction clips</span>
+              </div>
+            </div>
+            <label class="cozy-switch">
+              <input type="checkbox" id="filterGifs">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Images -->
+          <div class="filter-row">
+            <div class="filter-leading">
+              <div class="icon-wrap icon-emerald">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                  <circle cx="9" cy="9" r="2"></circle>
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                </svg>
+              </div>
+              <div class="filter-meta">
+                <span class="filter-title">Images & Photos</span>
+                <span class="filter-subtitle">Still images and galleries</span>
+              </div>
+            </div>
+            <label class="cozy-switch">
+              <input type="checkbox" id="filterImages">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Link Cards -->
+          <div class="filter-row">
+            <div class="filter-leading">
+              <div class="icon-wrap icon-violet">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </div>
+              <div class="filter-meta">
+                <span class="filter-title">Link Preview Cards</span>
+                <span class="filter-subtitle">Big banners for external URLs</span>
+              </div>
+            </div>
+            <label class="cozy-switch">
+              <input type="checkbox" id="filterCards">
+              <span class="switch-track">
+                <span class="switch-thumb"></span>
+              </span>
+            </label>
           </div>
         </div>
-        <label class="switch">
-          <input type="checkbox" id="filterVideos">
-          <span class="slider round"></span>
-        </label>
-      </div>
+      </section>
 
-      <div class="filter-item">
-        <div class="filter-info">
-          <span class="filter-icon">📷</span>
-          <div class="filter-texts">
-            <span class="filter-name">Images</span>
-            <span class="filter-desc">Photos & media gallery</span>
+      <!-- Hide Style Segmented Control -->
+      <section class="panel-section">
+        <div class="section-label">Feed Cleanliness</div>
+        <div class="segmented-control">
+          <label class="segment-btn">
+            <input type="radio" name="hideMode" value="hide" id="modeHide" checked>
+            <div class="segment-content">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                <line x1="2" y1="2" x2="22" y2="22"></line>
+              </svg>
+              <span>Clean Hide</span>
+            </div>
+          </label>
+
+          <label class="segment-btn">
+            <input type="radio" name="hideMode" value="placeholder" id="modePlaceholder">
+            <div class="segment-content">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span>Reveal Bar</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Cozy Summary Card -->
+      <section class="panel-section">
+        <div class="cozy-summary-card">
+          <div class="summary-top">
+            <div class="summary-left">
+              <div class="calm-sparkle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v4"></path>
+                  <path d="M12 18v4"></path>
+                  <path d="M4.93 4.93l2.83 2.83"></path>
+                  <path d="M16.24 16.24l2.83 2.83"></path>
+                  <path d="M2 12h4"></path>
+                  <path d="M18 12h4"></path>
+                  <path d="M4.93 19.07l2.83-2.83"></path>
+                  <path d="M16.24 7.76l2.83-2.83"></path>
+                </svg>
+              </div>
+              <span class="summary-heading">Curated this session</span>
+            </div>
+            <button id="refreshBtn" class="refresh-pill" title="Re-evaluate timeline now">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+                <path d="M16 21h5v-5"></path>
+              </svg>
+              <span>Refresh</span>
+            </button>
+          </div>
+
+          <div class="summary-chips">
+            <div class="summary-chip highlight-chip">
+              <span class="chip-count" id="statTotal">0</span>
+              <span class="chip-name">Hidden</span>
+            </div>
+            <div class="summary-chip">
+              <span class="chip-count" id="statVideos">0</span>
+              <span class="chip-name">Videos</span>
+            </div>
+            <div class="summary-chip">
+              <span class="chip-count" id="statGifs">0</span>
+              <span class="chip-name">GIFs</span>
+            </div>
+            <div class="summary-chip">
+              <span class="chip-count" id="statImages">0</span>
+              <span class="chip-name">Images</span>
+            </div>
           </div>
         </div>
-        <label class="switch">
-          <input type="checkbox" id="filterImages">
-          <span class="slider round"></span>
-        </label>
-      </div>
+      </section>
+    </main>
 
-      <div class="filter-item">
-        <div class="filter-info">
-          <span class="filter-icon">👾</span>
-          <div class="filter-texts">
-            <span class="filter-name">GIFs</span>
-            <span class="filter-desc">Animated GIFs & loops</span>
-          </div>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="filterGifs">
-          <span class="slider round"></span>
-        </label>
-      </div>
-
-      <div class="filter-item">
-        <div class="filter-info">
-          <span class="filter-icon">🔗</span>
-          <div class="filter-texts">
-            <span class="filter-name">Link Cards</span>
-            <span class="filter-desc">External URL preview banners</span>
-          </div>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="filterCards">
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </section>
-
-    <!-- Display Mode Section -->
-    <section class="section">
-      <div class="section-title">Hide Style</div>
-      <div class="mode-selector">
-        <label class="radio-label">
-          <input type="radio" name="hideMode" value="hide" id="modeHide" checked>
-          <div class="radio-card">
-            <div class="radio-title">Completely Invisible</div>
-            <div class="radio-desc">Clean feed without gaps</div>
-          </div>
-        </label>
-        <label class="radio-label">
-          <input type="radio" name="hideMode" value="placeholder" id="modePlaceholder">
-          <div class="radio-card">
-            <div class="radio-title">Placeholder Bar</div>
-            <div class="radio-desc">Compact bar with "Show" button</div>
-          </div>
-        </label>
-      </div>
-    </section>
-
-    <!-- Live Stats -->
-    <section class="section stats-section">
-      <div class="stats-header">
-        <span>Current Tab Stats</span>
-        <button id="refreshBtn" class="action-link" title="Re-apply filters immediately">Re-apply</button>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-box">
-          <div class="stat-number" id="statTotal">0</div>
-          <div class="stat-label">Hidden</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="statVideos">0</div>
-          <div class="stat-label">Videos</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="statGifs">0</div>
-          <div class="stat-label">GIFs</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="statImages">0</div>
-          <div class="stat-label">Images</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <span>CuratX v1.0 · Works on x.com & twitter.com</span>
+    <!-- Cozy Footer -->
+    <footer class="app-footer">
+      <div class="footer-hint">Enjoy a quiet, tailored timeline on X</div>
     </footer>
   </div>
 

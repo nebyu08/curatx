@@ -1,18 +1,23 @@
 /**
  * CuratX - Popup Script
- * Handles settings persistence, presets, and live statistics.
+ * Handles settings persistence, presets, real-time live tab statistics, and UI state.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   // Elements
   const masterSwitch = document.getElementById('masterSwitch');
+  const mainContent = document.getElementById('mainContent');
+  const statusDot = document.getElementById('statusDot');
+  const statusText = document.getElementById('statusText');
+
   const filterVideos = document.getElementById('filterVideos');
   const filterImages = document.getElementById('filterImages');
   const filterGifs = document.getElementById('filterGifs');
   const filterCards = document.getElementById('filterCards');
+
   const modeHide = document.getElementById('modeHide');
   const modePlaceholder = document.getElementById('modePlaceholder');
-  const presetButtons = document.querySelectorAll('.preset-btn');
+  const presetButtons = document.querySelectorAll('.preset-pill');
   const refreshBtn = document.getElementById('refreshBtn');
 
   // Stats elements
@@ -21,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const statGifs = document.getElementById('statGifs');
   const statImages = document.getElementById('statImages');
 
-  // Presets configuration definitions
+  // Presets definition
   const PRESETS = {
     text_only: {
       filterVideos: true,
@@ -55,8 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentSettings = { ...DEFAULT_SETTINGS };
 
-  // 1. Load settings from storage
-  chrome.storage.sync.get(DEFAULT_SETTINGS, (stored) => {
+  // Storage API helper (sync with fallback to local)
+  const storage = chrome.storage.sync || chrome.storage.local;
+
+  // 1. Load settings
+  storage.get(DEFAULT_SETTINGS, (stored) => {
     currentSettings = { ...DEFAULT_SETTINGS, ...stored };
     renderUI(currentSettings);
     queryTabStats();
@@ -64,11 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render UI according to state
   function renderUI(cfg) {
-    masterSwitch.checked = cfg.enabled;
-    filterVideos.checked = cfg.filterVideos;
-    filterImages.checked = cfg.filterImages;
-    filterGifs.checked = cfg.filterGifs;
-    filterCards.checked = cfg.filterCards;
+    masterSwitch.checked = Boolean(cfg.enabled);
+    filterVideos.checked = Boolean(cfg.filterVideos);
+    filterImages.checked = Boolean(cfg.filterImages);
+    filterGifs.checked = Boolean(cfg.filterGifs);
+    filterCards.checked = Boolean(cfg.filterCards);
 
     if (cfg.hideMode === 'placeholder') {
       modePlaceholder.checked = true;
@@ -80,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMasterEnabledState(cfg.enabled);
   }
 
-  // Update active preset button highlight
+  // Update preset active pill
   function updatePresetActiveState(presetName) {
     presetButtons.forEach((btn) => {
       if (btn.dataset.preset === presetName) {
@@ -91,25 +99,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Disable/enable controls when master switch is off/on
+  // Update master toggle UI state
   function updateMasterEnabledState(isEnabled) {
-    const sections = document.querySelectorAll('.section:not(:first-of-type)');
-    sections.forEach((sec) => {
-      if (!isEnabled) {
-        sec.classList.add('disabled-overlay');
-      } else {
-        sec.classList.remove('disabled-overlay');
-      }
-    });
+    if (isEnabled) {
+      mainContent.classList.remove('disabled-mode');
+      statusDot.classList.remove('inactive');
+      statusText.textContent = 'Filters active';
+    } else {
+      mainContent.classList.add('disabled-mode');
+      statusDot.classList.add('inactive');
+      statusText.textContent = 'CuratX paused';
+    }
   }
 
-  // Save current settings to chrome.storage
+  // Save settings helper
   function saveSettings(newSettings) {
     currentSettings = { ...currentSettings, ...newSettings };
-    chrome.storage.sync.set(currentSettings);
+    storage.set(currentSettings);
   }
 
-  // Detect which preset matches the current filter settings
+  // Determine which preset matches current toggles
   function determinePreset(filters) {
     for (const [name, p] of Object.entries(PRESETS)) {
       if (
@@ -124,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'custom';
   }
 
-  // Master switch handler
+  // Master switch event
   masterSwitch.addEventListener('change', () => {
     const enabled = masterSwitch.checked;
     updateMasterEnabledState(enabled);
@@ -147,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Preset buttons handler
+  // Preset buttons
   presetButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const preset = btn.dataset.preset;
@@ -181,27 +190,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Refresh / re-apply button
+  // Refresh button
   refreshBtn.addEventListener('click', () => {
+    refreshBtn.style.transform = 'rotate(180deg)';
+    setTimeout(() => {
+      refreshBtn.style.transform = '';
+    }, 300);
+
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0]?.id) {
         chrome.tabs.sendMessage(tabs[0].id, { type: 'REFRESH_NOW' }, () => {
-          setTimeout(queryTabStats, 200);
+          setTimeout(queryTabStats, 150);
         });
       }
     });
   });
 
-  // Query live stats from content script on active tab
+  // Query live tab stats
   function queryTabStats() {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (!tabs || !tabs[0] || !tabs[0].id) return;
 
       chrome.tabs.sendMessage(tabs[0].id, { type: 'GET_STATS' }, (response) => {
-        if (chrome.runtime.lastError) {
-          // Tab might not be on x.com or content script not injected
-          return;
-        }
+        if (chrome.runtime.lastError) return;
         if (response && response.stats) {
           statTotal.textContent = response.stats.totalBlocked || 0;
           statVideos.textContent = response.stats.videos || 0;
