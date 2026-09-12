@@ -1,0 +1,20 @@
+{
+  "name": "curatx",
+  "version": "1.0.0",
+  "description": "Browser extension to control and filter media on X (Twitter)",
+  "scripts": {
+    "test": "node test/filter_test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "x",
+    "twitter",
+    "content-filter",
+    "media-blocker"
+  ],
+  "author": "",
+  "license": "MIT"
+}

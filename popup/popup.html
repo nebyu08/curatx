@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuratX Controls</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">
+          <img src="../icons/icon32.png" alt="CuratX Logo" width="24" height="24">
+        </div>
+        <div class="brand-text">
+          <h1>CuratX</h1>
+          <span class="tagline">X Feed Tuner</span>
+        </div>
+      </div>
+      <label class="master-toggle" title="Enable / Disable CuratX">
+        <input type="checkbox" id="masterSwitch">
+        <span class="slider round"></span>
+      </label>
+    </header>
+
+    <!-- Presets -->
+    <section class="section">
+      <div class="section-title">Quick Presets</div>
+      <div class="preset-group" id="presetGroup">
+        <button type="button" class="preset-btn" data-preset="text_only" title="Hide all videos, images, gifs & cards">
+          <span class="preset-icon">📄</span>
+          <span class="preset-label">Text Only</span>
+        </button>
+        <button type="button" class="preset-btn" data-preset="text_and_images" title="Allow text & photos, block videos & gifs">
+          <span class="preset-icon">🖼️</span>
+          <span class="preset-label">Text + Img</span>
+        </button>
+        <button type="button" class="preset-btn" data-preset="no_videos" title="Block videos and gifs">
+          <span class="preset-icon">🚫</span>
+          <span class="preset-label">No Videos</span>
+        </button>
+        <button type="button" class="preset-btn active" data-preset="custom" title="Custom configuration">
+          <span class="preset-icon">⚙️</span>
+          <span class="preset-label">Custom</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="section" id="filtersSection">
+      <div class="section-title">Filter Out Media</div>
+
+      <div class="filter-item">
+        <div class="filter-info">
+          <span class="filter-icon">🎥</span>
+          <div class="filter-texts">
+            <span class="filter-name">Videos</span>
+            <span class="filter-desc">Native clips & video posts</span>
+          </div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="filterVideos">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="filter-item">
+        <div class="filter-info">
+          <span class="filter-icon">📷</span>
+          <div class="filter-texts">
+            <span class="filter-name">Images</span>
+            <span class="filter-desc">Photos & media gallery</span>
+          </div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="filterImages">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="filter-item">
+        <div class="filter-info">
+          <span class="filter-icon">👾</span>
+          <div class="filter-texts">
+            <span class="filter-name">GIFs</span>
+            <span class="filter-desc">Animated GIFs & loops</span>
+          </div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="filterGifs">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="filter-item">
+        <div class="filter-info">
+          <span class="filter-icon">🔗</span>
+          <div class="filter-texts">
+            <span class="filter-name">Link Cards</span>
+            <span class="filter-desc">External URL preview banners</span>
+          </div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="filterCards">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Display Mode Section -->
+    <section class="section">
+      <div class="section-title">Hide Style</div>
+      <div class="mode-selector">
+        <label class="radio-label">
+          <input type="radio" name="hideMode" value="hide" id="modeHide" checked>
+          <div class="radio-card">
+            <div class="radio-title">Completely Invisible</div>
+            <div class="radio-desc">Clean feed without gaps</div>
+          </div>
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="hideMode" value="placeholder" id="modePlaceholder">
+          <div class="radio-card">
+            <div class="radio-title">Placeholder Bar</div>
+            <div class="radio-desc">Compact bar with "Show" button</div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- Live Stats -->
+    <section class="section stats-section">
+      <div class="stats-header">
+        <span>Current Tab Stats</span>
+        <button id="refreshBtn" class="action-link" title="Re-apply filters immediately">Re-apply</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number" id="statTotal">0</div>
+          <div class="stat-label">Hidden</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="statVideos">0</div>
+          <div class="stat-label">Videos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="statGifs">0</div>
+          <div class="stat-label">GIFs</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="statImages">0</div>
+          <div class="stat-label">Images</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>CuratX v1.0 · Works on x.com & twitter.com</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
