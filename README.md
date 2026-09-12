@@ -1,8 +1,8 @@
-# TuneX - Custom Feed & Media Controller for X (Twitter)
+# CuratX - Custom Feed & Media Controller for X (Twitter)
 
-**TuneX** is a lightweight, high-performance browser extension (Manifest V3) that gives you full control over what media appears on your X (Twitter) timeline.
+**CuratX** is a lightweight, high-performance browser extension (Manifest V3) that gives you full control over what media appears on your X (Twitter) timeline.
 
-Whether you want a distraction-free **Text-Only** reading experience, prefer **Text + Images** without video autoplay distractions, or want to block GIFs and link cards, TuneX lets you fine-tune your feed effortlessly.
+Whether you want a distraction-free **Text-Only** reading experience, prefer **Text + Images** without video autoplay distractions, or want to block GIFs and link cards, CuratX lets you fine-tune your feed effortlessly.
 
 ---
 
@@ -42,7 +42,7 @@ Whether you want a distraction-free **Text-Only** reading experience, prefer **T
 3. Toggle on **"Developer mode"** (usually located in the top-right corner).
 4. Click the **"Load unpacked"** button.
 5. Select the `tune_x` folder where this repository is stored.
-6. Navigate to [x.com](https://x.com) or [twitter.com](https://twitter.com) and click the TuneX puzzle icon in your browser toolbar to customize your feed!
+6. Navigate to [x.com](https://x.com) or [twitter.com](https://twitter.com) and click the CuratX puzzle icon in your browser toolbar to customize your feed!
 
 ---
 

@@ -1,5 +1,5 @@
 /**
- * TuneX - Popup Script
+ * CuratX - Popup Script
  * Handles settings persistence, presets, real-time live tab statistics, and UI state.
  */
 
