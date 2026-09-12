@@ -6,28 +6,28 @@ Whether you want a distraction-free **Text-Only** reading experience, prefer **T
 
 ---
 
-## ✨ Features
+## Features
 
-- 🚫 **Selective Media Filtering**:
+- **Selective Media Filtering**:
   - **Videos**: Filter out video posts and clips.
   - **Images / Photos**: Filter out photos and media galleries.
   - **GIFs**: Distinctly detect and filter animated GIFs.
   - **Link Cards**: Filter out external link preview banners.
-- ⚡ **One-Click Presets**:
-  - **📄 Text Only**: Hides all posts containing videos, images, GIFs, and cards.
-  - **🖼️ Text + Images**: Hides videos & GIFs, leaving text and photos.
-  - **🚫 No Videos**: Blocks videos while leaving other media visible.
-  - **⚙️ Custom**: Toggle individual media types according to your preference.
-- 👁️ **Flexible Hiding Modes**:
+- **One-Click Presets**:
+  - **Text Only**: Hides all posts containing videos, images, GIFs, and cards.
+  - **Text + Images**: Hides videos and GIFs, leaving text and photos.
+  - **No Videos**: Blocks videos while leaving other media visible.
+  - **Custom**: Toggle individual media types according to your preference.
+- **Flexible Hiding Modes**:
   - **Completely Invisible**: Seamlessly removes blocked posts and timeline dividers with zero empty space.
   - **Placeholder Bar**: Replaces blocked posts with a compact bar showing the reason (e.g. *Post hidden: Video*) and a one-click **"Show"** button.
-- 🔄 **Real-Time Updates**: Changes made in the popup take effect immediately on your active X tab without requiring a page refresh.
-- 📊 **Live Session Stats**: Shows the number of blocked posts on your current tab in real time.
-- ⚡ **Zero Build Step**: Built with pure vanilla JavaScript, HTML, and CSS. No compilers or bundle steps required.
+- **Real-Time Updates**: Changes made in the popup take effect immediately on your active X tab without requiring a page refresh.
+- **Live Session Stats**: Shows the number of blocked posts on your current tab in real time.
+- **Zero Build Step**: Built with pure vanilla JavaScript, HTML, and CSS. No compilers or bundle steps required.
 
 ---
 
-## 🚀 Installation Guide
+## Installation Guide
 
 ### Chrome, Brave, Edge, Opera (Chromium)
 
@@ -46,7 +46,7 @@ Whether you want a distraction-free **Text-Only** reading experience, prefer **T
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 tune_x/
@@ -70,7 +70,7 @@ tune_x/
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 To verify detection logic across simulated tweet types (text, photos, native videos, GIFs, and link preview cards):
 
@@ -80,7 +80,7 @@ npm test
 
 ---
 
-## 🛠️ How It Works
+## How It Works
 
 1. **Virtual Timeline Observation**: X uses a virtualized scrolling list. The content script uses a debounced `MutationObserver` with `requestAnimationFrame` to scan feed items (`article[data-testid="tweet"]`) efficiently as you scroll.
 2. **Accurate Media Detection**: Distinguishes between native videos, looping GIFs (checking for GIF badges/metadata), media photos (`div[data-testid="tweetPhoto"]`), and external link cards, while ignoring user profile avatars and emojis.
