@@ -1,5 +1,5 @@
 /**
- * CuratX - Content Script
+ * TuneX - Content Script
  * Monitors X (Twitter) timeline and hides tweets based on media preferences.
  */
 
@@ -187,7 +187,7 @@
 
     const badge = document.createElement('span');
     badge.className = 'curatx-badge';
-    badge.textContent = 'CuratX';
+    badge.textContent = 'TuneX';
 
     const text = document.createElement('span');
     text.className = 'curatx-tag';
