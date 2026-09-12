@@ -28,8 +28,8 @@ button { color: inherit; }
 .app-header, .brand-group, .status-row, .section-heading, .filter-row, .session-card, .session-summary, .session-breakdown { display: flex; align-items: center; }
 .app-header { justify-content: space-between; margin-bottom: 16px; }
 .brand-group { gap: 11px; min-width: 0; }
-.brand-badge { display: grid; width: 36px; height: 36px; place-items: center; flex: 0 0 auto; color: var(--accent-strong); background: var(--accent-surface); border: 1px solid rgba(171, 208, 187, .2); border-radius: 11px; }
-.brand-badge svg { width: 19px; height: 19px; }
+.brand-badge { width: 36px; height: 36px; flex: 0 0 auto; overflow: hidden; background: #12151b; border: 1px solid var(--border); border-radius: 11px; }
+.brand-badge img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .brand-details { display: grid; gap: 1px; }
 .app-name { font-size: 15px; font-weight: 680; letter-spacing: -.2px; }
 .status-row { gap: 6px; color: var(--text-muted); font-size: 11.5px; }
